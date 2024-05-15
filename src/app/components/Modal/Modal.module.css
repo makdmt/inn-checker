@@ -1,0 +1,43 @@
+.modalScreen {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popupContainer {
+  max-width: 60vw;
+  max-height: 80vh;
+  position: relative;
+  z-index: 3;
+  cursor: auto;
+}
+
+.closeBtn {
+  position: absolute;
+  z-index: 1;
+  top: 25px;
+  right: 27px;
+  width: 10px;
+  height: 10px;
+}
+
+@media (max-width: 970px) {
+  .closeBtn {
+    top: 15px;
+    right: 17px;
+  }
+}
+
+
+@media (max-width: 670px) {
+  .popupContainer {
+    max-width: 70vw;
+  }
+}
