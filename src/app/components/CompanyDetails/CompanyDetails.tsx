@@ -1,6 +1,23 @@
+'use client'
+
+import React, { useState } from "react";
+import { Modal } from "../Modal/Modal";
+import { ConfirmForm } from "../ConfirmForm/ConfirmForm";
 import { OrganizationInfo } from "@/app/services/inn-api";
+import { useRouter } from "next/navigation";
 
 export const CompanyDetails = ({value: orgName, data }: OrganizationInfo) => {
+
+    const [modalOpened, setmodalOpened] = useState<boolean>(false);
+    const router = useRouter()
+
+    const closeModal = React.useCallback(() => {
+        setmodalOpened(false);
+    }, [])
+
+    const redirectToMap = () => {
+        router.push(`https://yandex.ru/maps/?text=${data.address.value}`)
+    }
 
     return (
         <div>
@@ -14,7 +31,15 @@ export const CompanyDetails = ({value: orgName, data }: OrganizationInfo) => {
                 <li>ОКПО: {data.okpo}</li>
                 <li>ОКАТО: {data.okato}</li>
             </ul>
-            <p>Адрес: {data.address.value}</p>
+            <p>Адрес: <a onClick={() => setmodalOpened(true)}>{data.address.value}</a></p>
+            {modalOpened && <Modal closeFunc={closeModal}>
+                    <ConfirmForm
+                        heading="Переход на сторонний сайт"
+                        ask="Вы действительно хотите перейти на внешний ресурс?"
+                        yesBtnFunc={redirectToMap}
+                        noBtnFunc={closeModal}
+                    />
+                </Modal>}
         </div>
     )
 

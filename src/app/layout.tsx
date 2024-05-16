@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={inter.className}>
+      <div id={'modalRoot'}></div>
         <main>
           {children}
         </main>

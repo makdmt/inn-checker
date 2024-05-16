@@ -1,17 +1,11 @@
-import { redirect } from "next/navigation";
 import { SearchBar } from "../SearchBar/SearchBar"
+import { navigateToInfoPage } from "./SearchByInnForm.actions";
 
 export const INN_INPUT_PROPS = {
     name: 'inn',
     label: 'Поиск по ИНН',
     pattern: '^[0-9]{10}$',
     maxLength: 10
-}
-
-export async function navigateToInfoPage(formData: FormData) {
-    'use server'
-    const innValue = formData.get(INN_INPUT_PROPS.name);
-    redirect(`/info/${innValue}`);
 }
 
 export const SearchByInnForm = () => {

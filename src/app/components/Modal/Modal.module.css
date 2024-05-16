@@ -15,7 +15,7 @@
   max-width: 60vw;
   max-height: 80vh;
   position: relative;
-  z-index: 3;
+  z-index: 6;
   cursor: auto;
 }
 
