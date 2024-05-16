@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { LayoutCommonBlock } from "../LayoutCommonBlock/LayoutCommonBlock";
+import { Button } from "../Button/Button";
 
 import styles from './ConfirmForm.module.css'
 
@@ -22,8 +23,8 @@ export const ConfirmForm: FC<ConfirmForm> = ({ heading, ask, yesBtnLabel = 'Да
             <h2 className={styles.heading}>{heading}</h2>
             <p className={styles.ask}>{ask}</p>
             <div className={styles.buttonContainer}>
-                <button className={`${styles.button} ${styles.yesButton}`} onClick={yesBtnFunc}>{yesBtnLabel}</button>
-                <button className={`${styles.button} ${styles.noButton}`} onClick={noBtnFunc}>{noBtnLabel}</button>
+                <Button type='button' onClick={yesBtnFunc} extraClass={styles.yesButton}>{yesBtnLabel}</Button>
+                <Button type='button' onClick={noBtnFunc} extraClass={styles.noButton}>{noBtnLabel}</Button>
             </div>
         </LayoutCommonBlock>
     )

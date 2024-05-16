@@ -3,22 +3,19 @@ import { useFormStatus } from "react-dom";
 
 import styles from './Button.module.css'
 
-interface IButton extends React.HTMLProps<HTMLButtonElement> {
+type Button = {
     type: 'submit' | 'reset' | 'button' | undefined,
-    // design: 'accept' | 'decline',
-    // title: string,
     extraClass?: string,
-}
+} & React.HTMLProps<HTMLButtonElement>
 
-export const Button: FC<IButton> = ({ title, extraClass, children, ...props }) => {
+export const Button: FC<Button> = ({ title, extraClass, children, ...props }) => {
 
     const { pending } = useFormStatus()
 
-    // const typeClassname = design === 'accept' ? styles.yesButton : styles.noButton;
-
+    if (pending) props = { ...props, disabled: pending }
 
     return (
-        <button title={title} className={`${styles.button} ${extraClass}`} disabled={pending} {...props} >
+        <button title={title} className={`${styles.button} ${extraClass}`} {...props} >
             {pending ? 'Loading...' : children}
         </button>
     )

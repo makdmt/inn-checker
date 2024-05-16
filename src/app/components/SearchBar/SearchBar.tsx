@@ -3,8 +3,6 @@
 import React, { useRef, useState } from 'react';
 import TextInput, { TextInputProps } from '../TextInput/TextInput';
 import styles from './SearchBar.module.css'
-import { SearchIcon } from '../Icons/SearchIcon';
-import { useFormStatus } from 'react-dom';
 import { Button } from '../Button/Button';
 
 type Props = React.HTMLProps<HTMLFormElement> & {
@@ -35,12 +33,13 @@ export const SearchBar = (({ name, searchFunc, enableInputValidation = false, cu
 
     return (
         <form name={name} action={searchFunc} className={`${styles.container} ${extraClass}`} {...props}>
-            <TextInput ref={inputRef} {...inputProps} />
+            <div className={styles.searchBarContainer}>
+                <TextInput ref={inputRef} {...inputProps} />
+                <Button type='submit' title='отправить запрос' disabled={!!validationMsg} extraClass={`${styles.searchBtn}`} >
+                    Поиск
+                </Button>
+            </div>
             <p>{validationMsg}</p>
-            7731639557
-            <Button type='submit' title='отправить запрос' extraClass={`${styles.searchBtn}`} >
-                <SearchIcon />
-            </Button>
         </form>
     )
 })

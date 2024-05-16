@@ -25,6 +25,8 @@
     border-radius: var(--border-radius);
 }
 
+
+
 .yesButton {
     background-color: var(--color-orange);
     color: var(--color-white);

@@ -1,12 +1,10 @@
 'use server'
 
 import { findByInn } from '@/app/services/inn-api';
-import { SearchBar } from './components/SearchBar/SearchBar';
-import styles from './page.module.css';
-import { redirect } from 'next/navigation';
-import { INN_INPUT_PROPS } from '@/app/components/SearchByInnForm/SearchByInnForm';
+import { INN_INPUT_PROPS, SearchByInnForm } from '@/app/components/SearchByInnForm/SearchByInnForm';
 import { CompanyDetails } from '@/app/components/CompanyDetails/CompanyDetails';
-import { useState } from 'react';
+import { ErrorInfo } from '@/app/components/ErrorInfo/ErrorInfo';
+import styles from './page.module.css'
 
 type Props = {
   params: {
@@ -17,32 +15,34 @@ type Props = {
 
 export default async function CompanyDetailsPage({ params }: Props) {
 
-
-
-  
-
   if (!params.inn.match(new RegExp(INN_INPUT_PROPS.pattern))) return (
-    <>
-      <h2>Произошла ошибка</h2>
-      <p>Неверный ИНН</p>
-    </>
+    <div>
+      <SearchByInnForm extraClass={styles.searchBar} />
+      <ErrorInfo errMessage='Неверный ИНН' />
+    </div>
   )
 
   const response = await findByInn(params.inn);
 
-
-
-
-
   if ('errorMessage' in response) return (
-    <>
-      <h2>Произошла ошибка</h2>
-      <p>{response.errorMessage}</p>
-    </>
+    <div>
+      <SearchByInnForm extraClass={styles.searchBar} />
+      <ErrorInfo errMessage={response.errorMessage} />
+    </div>
+  )
+
+  if (!response.suggestions.length) return (
+    <div>
+      <SearchByInnForm extraClass={styles.searchBar} />
+      <ErrorInfo errMessage='Компания с таким ИНН не найдена' />
+    </div>
   )
 
 
   return (
-    <CompanyDetails {...response.suggestions[0]} />
+    <div>
+      <SearchByInnForm extraClass={styles.searchBar} />
+      <CompanyDetails {...response.suggestions[0]} />
+    </div>
   );
 }

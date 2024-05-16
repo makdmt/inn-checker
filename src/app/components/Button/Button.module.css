@@ -2,14 +2,9 @@
     padding: 8px 16px;
     border: 1px solid var(--color-orange);
     border-radius: var(--border-radius);
+    transition: opacity .3s;
 }
 
-.yesButton {
-    background-color: var(--color-orange);
-    color: var(--color-white);
-}
-
-.noButton {
-    background-color: var(--color-white);
-    color: var(--color-orange);
+.button:hover {
+    opacity: .6;
 }

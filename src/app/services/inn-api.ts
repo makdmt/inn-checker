@@ -1,8 +1,8 @@
-import { redirect } from "next/navigation";
+'use server'
 
 const URL = 'http://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party';
 const TOKEN = '32589fa94d680272566e0a45f14fcc03b3d38fe0';
-// const TOKEN = '32589fa94d680272566e0afcc03b3d38fe0';
+const ERR_MSG = 'Что-то пошло не так...попробуйте обновить страницу.';
 
 type ErrorMessage = {
   errorMessage: string;
@@ -36,10 +36,7 @@ type ManagerDetails = {
 
 const checkResponse = (res: Response): Promise<ResponseBody | ErrorMessage > => {
   if (res.ok) return res.json() as unknown as Promise<ResponseBody>
-    const obj = {message: 'Организация не найдена'}
-
-  if (res.status === 404) return Promise.resolve({message: 'Организация не найдена'})
-  return Promise.resolve({message: 'Организация не найдена'})
+  return Promise.resolve({errorMessage: ERR_MSG})
 }
 
 export async function findByInn(inn: string): Promise<ResponseBody | ErrorMessage>  {
@@ -58,9 +55,7 @@ export async function findByInn(inn: string): Promise<ResponseBody | ErrorMessag
   })
     .then(res => checkResponse(res))
     .catch((err: unknown) => {
-      console.log(err);
-      return {message: 'Во время выполнения запроса произошла ошибка, попробуйте повторить позже'}
-      
+      return {errorMessage: ERR_MSG}  
 })
 }
 
