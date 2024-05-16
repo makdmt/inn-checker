@@ -5,6 +5,7 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 import styles from './page.module.css';
 import { redirect } from 'next/navigation';
 import { INN_INPUT_PROPS } from '@/app/components/SearchByInnForm/SearchByInnForm';
+import { CompanyDetails } from '@/app/components/CompanyDetails/CompanyDetails';
 
 type Props = {
   params: {
@@ -22,19 +23,22 @@ export default async function CompanyDetailsPage({ params }: Props) {
   </>
   )
 
-  const companyDetails = await findByInn(params.inn);
+  const response = await findByInn(params.inn);
 
 
-  if ('message' in companyDetails) return (
+  if ('errorMessage' in response) return (
     <>
       <h2>Произошла ошибка</h2>
-      <p>{companyDetails.message}</p>
+      <p>{response.errorMessage}</p>
     </>
   )
 
+  console.log(response.suggestions[0].data.management)
+
   return (
-    <main className={styles.main}>
-      <p>Детали</p>
-    </main>
+    // <main className={styles.main}>
+    //   <p>Детали</p>
+    // </main>
+    <CompanyDetails {...response.suggestions[0]} />
   );
 }

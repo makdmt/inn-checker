@@ -12,14 +12,16 @@ type ResponseBody = {
   suggestions: OrganizationInfo[]
 }
 
-type OrganizationInfo = {
+export type OrganizationInfo = {
   value: string;
-  inn: string;
-  ogrn: string;
-  okpo: string;
-  okato: string;
-  address: AddressDetails[];
-  managers: ManagerDetails[];
+  data: {
+    inn: string;
+    ogrn: string;
+    okpo: string;
+    okato: string;
+    address: AddressDetails;
+    management: ManagerDetails;
+  }
 }
 
 type AddressDetails = {
@@ -27,10 +29,8 @@ type AddressDetails = {
 }
 
 type ManagerDetails = {
-  fio: {
-    source: string;
-    gender: string;
-  }
+  name: string;
+  post: string;
 }
 
 
